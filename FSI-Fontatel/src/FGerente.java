@@ -10,11 +10,20 @@
  */
 public class FGerente extends javax.swing.JFrame {
 
+    Conexion cnx = new Conexion();
+
     /**
      * Creates new form FGerente
      */
     public FGerente() {
         initComponents();
+        
+
+        if (cnx.conectar("localhost", "fondatel", "root", "") == 1) {
+            cnx.entablar("SELECT * FROM ventas", TOrdenes);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se puede conectar");
+        }
     }
 
     /**
@@ -27,6 +36,10 @@ public class FGerente extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TOrdenes = new javax.swing.JTable();
+        BAcualizar = new javax.swing.JButton();
+        BCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -37,21 +50,56 @@ public class FGerente extends javax.swing.JFrame {
             }
         });
 
+        TOrdenes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(TOrdenes);
+
+        BAcualizar.setText("CERRAR SESION");
+        BAcualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BAcualizarActionPerformed(evt);
+            }
+        });
+
+        BCerrar.setText("ACTUALIZAR");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(182, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(155, 155, 155)
                 .addComponent(jButton1)
+                .addGap(41, 41, 41)
+                .addComponent(BAcualizar)
+                .addGap(30, 30, 30)
+                .addComponent(BCerrar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(237, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addGap(57, 57, 57)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BAcualizar)
+                    .addComponent(BCerrar))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -63,6 +111,13 @@ FAlimentos alimentos = new FAlimentos();
     this.dispose();       
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BAcualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAcualizarActionPerformed
+       cnx.entablar("SELECT * FROM ventas", TOrdenes);
+       FAcceso ventanaAcceso = new FAcceso(); 
+    ventanaAcceso.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_BAcualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -100,6 +155,10 @@ FAlimentos alimentos = new FAlimentos();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BAcualizar;
+    private javax.swing.JButton BCerrar;
+    private javax.swing.JTable TOrdenes;
     private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

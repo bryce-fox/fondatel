@@ -1,7 +1,5 @@
 
 import javax.swing.JOptionPane;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,12 +14,21 @@ import java.sql.ResultSet;
 public class FAcceso extends javax.swing.JFrame {
 
     Conexion cnx = new Conexion();
+    String rol = "SELECT puesto FROM empleados WHERE nom_usr = '%s' AND nip = '%s' AND estadoe = 'activo'";
 
     int intentos = 0;
     
     public FAcceso() {
         initComponents();
         setLocationRelativeTo(this);
+        setTitle("FondaTel | Inicio de sesión");
+        
+        jLabel3.setText("FT");
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 30));
+        jLabel3.setForeground(java.awt.Color.WHITE);
+        jLabel4.setForeground(java.awt.Color.WHITE);
+        
         
         if (cnx.conectar("localhost", "fondatel", "root", "") == 0) {
             JOptionPane.showMessageDialog(this, "Sin conexión. La ventana se cerrará...");
@@ -151,21 +158,20 @@ public class FAcceso extends javax.swing.JFrame {
 
     private void BAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAceptarActionPerformed
         String usr = TUsuario.getText().trim();
-      String tipo = "";
-try (PreparedStatement ps = cnx.getCon().prepareStatement(
-        "SELECT puesto FROM empleados WHERE codigo = ? AND estadoe = 'activo'")) {
-    ps.setString(1, usr);
-    try (ResultSet rs = ps.executeQuery()) {
-        if (rs.next()) tipo = rs.getString("puesto");
-    }
+        String nip = TPassword.getText().trim();
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "No se pudo validar el acceso: " + ex.getMessage());
-            return;
-        }
-        javax.swing.JFrame ventana;
-        if (tipo == null) tipo = "";
- switch (tipo) {
+        String sql = String.format(rol, usr, nip);
+        String tipo = cnx.obtenerDato(sql);
+
+        switch (tipo) {
+    case "cliente":
+    case "visitante":
+        FMenu menuCliente = new FMenu();
+        cnx.desconectar();
+        this.dispose();
+        menuCliente.setVisible(true);
+        break;
+
     case "mesero":
     case "mecero":
         FMesero fm = new FMesero();

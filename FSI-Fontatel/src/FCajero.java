@@ -10,12 +10,21 @@
  */
 public class FCajero extends javax.swing.JFrame {
 
+    Conexion cnx = new Conexion();
+
     /**
      * Creates new form FCajero
      */
     public FCajero() {
         initComponents();
-        setTitle("Cajeros");
+    
+            
+
+        if (cnx.conectar("localhost", "fondatel", "root", "") == 1) {
+            cnx.entablar("SELECT * FROM tickets", TOrdenes);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se puede conectar");
+        }
     }
 
     /**
@@ -27,21 +36,76 @@ public class FCajero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        BActualizar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TOrdenes = new javax.swing.JTable();
+        BVentas = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BActualizar.setText("ACTUALIZAR");
+        BActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BActualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 470, -1, -1));
+
+        TOrdenes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(TOrdenes);
+
+        jScrollPane2.setViewportView(jScrollPane1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 1520, 447));
+
+        BVentas.setText("VENTAS DEL DIA");
+        BVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BVentasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 470, -1, -1));
+
+        jButton1.setText("CERRAR SESION");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 470, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BActualizarActionPerformed
+        cnx.entablar("SELECT * FROM tickets", TOrdenes);
+    }//GEN-LAST:event_BActualizarActionPerformed
+
+    private void BVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BVentasActionPerformed
+        // TODO add your handling code here:
+        cnx.entablar("SELECT * FROM ventas WHERE DATE(fecha_hora) = CURDATE()", TOrdenes);
+    }//GEN-LAST:event_BVentasActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        FAcceso ventanaAcceso = new FAcceso();
+        ventanaAcceso.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +143,11 @@ public class FCajero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BActualizar;
+    private javax.swing.JButton BVentas;
+    private javax.swing.JTable TOrdenes;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class FMenu extends javax.swing.JFrame {
 Conexion cnx = new Conexion();
-String todo = "SELECT * FROM menu";
+String todo = "SELECT * FROM menu ORDER BY nombre";
 String categorias = "SELECT DISTINCT categoria FROM menu ORDER BY categoria";
 String por_categoria = "SELECT * FROM menu WHERE categoria = '%s' ORDER BY nombre";
 /**
@@ -21,8 +21,7 @@ String por_categoria = "SELECT * FROM menu WHERE categoria = '%s' ORDER BY nombr
      */
     public FMenu() {
         initComponents();
-        setLocationRelativeTo(this);
-        setTitle("Fondatel");
+       
         TMnenu.setRowHeight(100);
           if (cnx.conectar("localhost", "fondatel", "root", "") == 0) {
              
@@ -30,8 +29,10 @@ String por_categoria = "SELECT * FROM menu WHERE categoria = '%s' ORDER BY nombr
             JOptionPane.showMessageDialog(this, "Sin conexión. La ventana se cerrará...");
             System.exit(0);
         }else{
-               cnx.entablar(todo, TMnenu);
                cnx.seleccionar(categorias, CBCategoria);
+               CBCategoria.insertItemAt("todos", 0);
+               CBCategoria.setSelectedIndex(0);
+               cnx.entablar(todo, TMnenu);
           }
               
           

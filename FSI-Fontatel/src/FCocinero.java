@@ -10,11 +10,21 @@
  */
 public class FCocinero extends javax.swing.JFrame {
 
+    Conexion cnx = new Conexion();
+
     /**
      * Creates new form FCocinero
      */
     public FCocinero() {
         initComponents();
+      
+              
+
+        if (cnx.conectar("localhost", "fondatel", "root", "") == 1) {
+            cnx.entablar("SELECT * FROM comandas", TOrdenes);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se puede conectar");
+        }
     }
 
     /**
@@ -26,21 +36,109 @@ public class FCocinero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TOrdenes = new javax.swing.JTable();
+        BActualizar = new javax.swing.JButton();
+        BListo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        TOrdenes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(TOrdenes);
+
+        BActualizar.setText("ACTUALIZAR");
+        BActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BActualizarActionPerformed(evt);
+            }
+        });
+
+        BListo.setText("LISTO");
+        BListo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BListoActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("CERRAR SESION");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(333, 333, 333)
+                .addComponent(BActualizar)
+                .addGap(84, 84, 84)
+                .addComponent(BListo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1388, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BActualizar)
+                    .addComponent(BListo)
+                    .addComponent(jButton1))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BActualizarActionPerformed
+        cnx.entablar("SELECT * FROM comandas", TOrdenes);
+    }//GEN-LAST:event_BActualizarActionPerformed
+
+    private void BListoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BListoActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = TOrdenes.getSelectedRow();
+    
+    if (filaSeleccionada >= 0) {
+        // Suponiendo que el "folio" de la orden está en la columna 0
+        String folio = TOrdenes.getValueAt(filaSeleccionada, 0).toString();
+        cnx.entablar("SELECT * FROM comandas", TOrdenes);
+        javax.swing.JOptionPane.showMessageDialog(this, "Orden despachada.");
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor selecciona una orden de la tabla.");
+    }
+    
+    }//GEN-LAST:event_BListoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+                                                         
+    
+    FAcceso ventanaAcceso = new FAcceso(); 
+    ventanaAcceso.setVisible(true);
+    this.dispose(); 
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +176,10 @@ public class FCocinero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BActualizar;
+    private javax.swing.JButton BListo;
+    private javax.swing.JTable TOrdenes;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

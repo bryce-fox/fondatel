@@ -10,11 +10,20 @@
  */
 public class FMesero extends javax.swing.JFrame {
 
+    Conexion cnx = new Conexion();
+
     /**
      * Creates new form FMesero
      */
     public FMesero() {
         initComponents();
+        
+
+        if (cnx.conectar("localhost", "fondatel", "root", "") == 1) {
+            cnx.entablar("SELECT * FROM pedidos", TOrdenes);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se puede conectar");
+        }
     }
 
     /**
@@ -26,21 +35,96 @@ public class FMesero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TOrdenes = new javax.swing.JTable();
+        BActualizar = new javax.swing.JButton();
+        BCerrar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        TOrdenes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(TOrdenes);
+
+        BActualizar.setText("ACTUALIZAR");
+        BActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BActualizarActionPerformed(evt);
+            }
+        });
+
+        BCerrar.setText("CERRAR SESION");
+        BCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BCerrarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("ENTRAR A ALIMENTOS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(256, 256, 256)
+                .addComponent(BActualizar)
+                .addGap(62, 62, 62)
+                .addComponent(BCerrar)
+                .addGap(37, 37, 37)
+                .addComponent(jButton1)
+                .addContainerGap(130, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BActualizar)
+                    .addComponent(BCerrar)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 68, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BActualizarActionPerformed
+        cnx.entablar("SELECT * FROM pedidos", TOrdenes);
+    }//GEN-LAST:event_BActualizarActionPerformed
+
+    private void BCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BCerrarActionPerformed
+
+    FAcceso ventanaAcceso = new FAcceso(); 
+    ventanaAcceso.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_BCerrarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FAlimentos alimentos = new FAlimentos();
+        alimentos.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +162,10 @@ public class FMesero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BActualizar;
+    private javax.swing.JButton BCerrar;
+    private javax.swing.JTable TOrdenes;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
