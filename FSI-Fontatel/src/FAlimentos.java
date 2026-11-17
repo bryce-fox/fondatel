@@ -25,7 +25,7 @@ public class FAlimentos extends javax.swing.JFrame {
      */
     public FAlimentos() {
         initComponents();
-        acomodarInterfaz();
+       
         LFoto.setText("");
         cnx = new Conexion();
         if (cnx.conectar("localhost", "fondatel", "root", "") == 1) {
@@ -37,81 +37,13 @@ public class FAlimentos extends javax.swing.JFrame {
         }
     }
 
-    private void acomodarInterfaz() {
-     
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(
-                new java.awt.Color(211, 220, 211)));
-        jScrollPane1.getViewport().setBackground(java.awt.Color.WHITE);
-
-        javax.swing.JPanel principal = new javax.swing.JPanel(new java.awt.BorderLayout(0, 16));
-      
-              
-
-        javax.swing.JPanel contenido = new javax.swing.JPanel(new java.awt.BorderLayout(16, 0));
-        contenido.setOpaque(false);
-
-        javax.swing.JPanel lateral = new javax.swing.JPanel(new java.awt.BorderLayout(0, 12));
-        lateral.setOpaque(false);
-        lateral.setPreferredSize(new java.awt.Dimension(360, 0));
-
-        javax.swing.JPanel campos = new javax.swing.JPanel(new java.awt.GridLayout(0, 2, 8, 10));
-        campos.setBackground(java.awt.Color.WHITE);
-        campos.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 220, 211)),
-                javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12)));
-        campos.add(jLabel1);
-        campos.add(TAlimentos);
-        campos.add(jLabel2);
-        campos.add(TNombre);
-        campos.add(jLabel3);
-        campos.add(TDescripcion);
-        campos.add(jLabel4);
-        campos.add(TPrecio);
-        campos.add(jLabel7);
-        campos.add(CEstado);
-        campos.add(jLabel8);
-        campos.add(CCategoria);
-
-       
-        for (java.awt.Component componente : campos.getComponents()) {
-            if (componente instanceof javax.swing.JLabel) {
-              
-                componente.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
-            }
-        }
-
-        javax.swing.JPanel foto = new javax.swing.JPanel(new java.awt.BorderLayout(0, 8));
-        foto.setBackground(java.awt.Color.WHITE);
-        foto.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 220, 211)),
-                javax.swing.BorderFactory.createEmptyBorder(10, 12, 10, 12)));
-        jLabel5.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
-       
-        foto.add(jLabel5, java.awt.BorderLayout.NORTH);
-        LFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LFoto.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
-        LFoto.setPreferredSize(new java.awt.Dimension(250, 230));
-        LFoto.setOpaque(true);
-       
-        foto.add(LFoto, java.awt.BorderLayout.CENTER);
-      
-        foto.add(BAgregarfoto, java.awt.BorderLayout.SOUTH);
-
    
-        lateral.add(campos, java.awt.BorderLayout.NORTH);
-        lateral.add(foto, java.awt.BorderLayout.CENTER);
-        lateral.add(BRegistrar, java.awt.BorderLayout.SOUTH);
+     
+        
 
-        contenido.add(lateral, java.awt.BorderLayout.WEST);
-        contenido.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-        principal.add(contenido, java.awt.BorderLayout.CENTER);
+       
 
-        setContentPane(principal);
-        setTitle("FondaTel | Alimentos");
-        setMinimumSize(new java.awt.Dimension(1050, 650));
-        setSize(1280, 760);
-        setLocationRelativeTo(null);
-    }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
